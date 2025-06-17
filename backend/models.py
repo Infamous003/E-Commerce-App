@@ -5,14 +5,6 @@ class Rating(BaseModel):
     stars: float
     count: int
 
-# class Product(SQLModel, table=True):
-#     __tablename__="products"
-#     id: str | None = None
-#     name: str
-#     image: str
-#     priceCents: int
-#     review_stars: float
-
 class Product(SQLModel, table=True):
     __tablename__="products"
     id: str = Field(default=None, primary_key=True)
