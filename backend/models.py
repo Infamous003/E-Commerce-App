@@ -16,3 +16,9 @@ class ProductPublic(BaseModel):
     priceCents: int
     review_stars: float
     review_count: float
+
+class User(SQLModel, table=True):
+    __tablename__ = "user"
+    id: int | None = Field(default=None, primary_key=True)
+    username: str = Field(nullable=False, max_length=32, unique=True)
+    password: str = Field(nullable=False, max_length=64, min_length=8)
