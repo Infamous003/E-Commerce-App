@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-from ..models import Product
+from ..models import Product, ProductPublic
 from ..database import init_db, engine, get_session
 from sqlmodel import Session, select
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
-@router.get("/", response_model=list[Product])
+@router.get("/", response_model=list[ProductPublic], status_code=status.HTTP_200_OK)
 def get_products(session: Session = Depends(get_session)):
   products = session.exec(
       select(Product)
@@ -13,7 +13,7 @@ def get_products(session: Session = Depends(get_session)):
 
   return products
 
-@router.get("/{id}")
+@router.get("/{id}", response_model=ProductPublic, status_code=status.HTTP_200_OK)
 def get_product_by_id(id: str, session: Session = Depends(get_session)):
   product_found = session.exec(
     select(Product).where(Product.id == id)

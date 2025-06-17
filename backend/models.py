@@ -1,10 +1,6 @@
 from pydantic import BaseModel
 from sqlmodel import SQLModel, Relationship, Field
 
-class Rating(BaseModel):
-    stars: float
-    count: int
-
 class Product(SQLModel, table=True):
     __tablename__="products"
     id: str = Field(default=None, primary_key=True)
@@ -14,3 +10,9 @@ class Product(SQLModel, table=True):
     review_stars: float = Field(nullable=False)
     review_count: float = Field(nullable=False)
     
+class ProductPublic(BaseModel):
+    name: str
+    image: str
+    priceCents: int
+    review_stars: float
+    review_count: float
