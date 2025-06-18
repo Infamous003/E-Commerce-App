@@ -19,6 +19,17 @@ class ProductPublic(BaseModel):
 
 class User(SQLModel, table=True):
     __tablename__ = "user"
-    id: int | None = Field(default=None, primary_key=True)
+    id: int = Field(default=None, primary_key=True)
     username: str = Field(nullable=False, max_length=32, unique=True)
     password: str = Field(nullable=False, max_length=64, min_length=8)
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str | None = None
