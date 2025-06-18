@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routes import products
+from .routes import products, users
 from .database import init_db
 
 app = FastAPI(
@@ -7,6 +7,7 @@ app = FastAPI(
     summary="This is a backend for an E-Commerce Application. Built using FastAPI.")
 
 app.include_router(products.router)
+app.include_router(users.router)
 
 try:
     init_db()
