@@ -3,6 +3,7 @@ from datetime import timedelta
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
+import jwt
 
 from sqlmodel import Session, select
 from ..database import get_session
@@ -11,6 +12,10 @@ from ..utils import get_user, authenticate_user, get_password_hash, create_acces
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+
+SECRET_KEY = "keep this a secret please"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)):
     try:
