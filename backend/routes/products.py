@@ -27,6 +27,7 @@ def get_product_by_id(id: str, session: Session = Depends(get_session)):
   
 @router.get("/{id}/buy")
 def buy_product(id: str,
+                quantity: int = 1,
                 session: Session = Depends(get_session),
                 current_user: User = Depends(get_current_user)
                 ):
@@ -38,7 +39,10 @@ def buy_product(id: str,
      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
   
   # Here, we are addin a new order to th eorders table
-  new_order = Order(product_id=id, customer_id=current_user.id)
+  price = product_found.priceCents
+  total_price = quantity * price
+
+  new_order = Order(product_id=id, customer_id=current_user.id, price_cents=price, total_price_cents=total_price)
   session.add(new_order)
   session.commit()
   session.add(new_order)

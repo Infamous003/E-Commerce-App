@@ -50,6 +50,9 @@ class Order(SQLModel, table=True):
     __tablename__ = "orders"
     id: int | None = Field(default=None, primary_key=True)
     product_id: str = Field(foreign_key="products.id", ondelete="CASCADE")
+    price_cents: int = Field()
+    quantity: int = Field(default=1)
+    total_price_cents: int = Field()
     customer_id: int = Field(foreign_key="users.id", ondelete="CASCADE")
     date_of_order: datetime = Field(default_factory=datetime.now)
     status: OrderStatus = Field(default=OrderStatus.ARRIVING)
