@@ -58,9 +58,6 @@ class Order(SQLModel, table=True):
     date_of_order: datetime = Field(default_factory=datetime.now)
     status: OrderStatus = Field(default=OrderStatus.ARRIVING)
     
-    # address
-    # total price
-    
     product: Product = Relationship(back_populates="order")
     user: User = Relationship(back_populates="order")
 

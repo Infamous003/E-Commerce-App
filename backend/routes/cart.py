@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from ..models import Order, User, OrderStatus, Cart
+from fastapi import APIRouter, Depends
+from ..models import User, Cart
 from ..database import get_session
 from sqlmodel import Session, select
 from .auth import get_current_user

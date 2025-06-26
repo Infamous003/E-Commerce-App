@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from ..models import Product, ProductPublic, Order, User, Cart
-from ..database import init_db, engine, get_session
+from ..database import get_session
 from sqlmodel import Session, select
 from .auth import get_current_user
 
@@ -99,7 +99,7 @@ def remove_from_cart(id: str,
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
   
   cart_item = session.exec(
-    select(Cart).where(Cart.product_id == id)
+    select(Cart).where(Cart.product_id == id, Cart.customer_id == current_user.id)
   ).one_or_none()
 
   if cart_item is None:
