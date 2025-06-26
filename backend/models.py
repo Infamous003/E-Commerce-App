@@ -28,6 +28,7 @@ class User(SQLModel, table=True):
     password: str = Field(nullable=False, max_length=64, min_length=8)
 
     order: list["Order"] = Relationship(back_populates="user")
+    cart: list["Cart"] = Relationship(back_populates="user")
 
 class UserCreate(BaseModel):
     username: str
@@ -62,3 +63,16 @@ class Order(SQLModel, table=True):
     
     product: Product = Relationship(back_populates="order")
     user: User = Relationship(back_populates="order")
+
+
+class Cart(SQLModel, table=True):
+    __tablename__="cart"
+    id: int | None = Field(default=None, primary_key=True)
+    product_id: str = Field(foreign_key="products.id", ondelete="CASCADE")
+    name: str = Field(nullable=False)
+    image: str = Field(nullable=False)
+    price_cents: int = Field()
+    quantity: int = Field(default=1)
+
+    customer_id: int = Field(foreign_key="users.id", ondelete="CASCADE")
+    user: User = Relationship(back_populates="cart")
