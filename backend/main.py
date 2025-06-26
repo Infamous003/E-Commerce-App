@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routes import auth, products, orders
+from .routes import auth, products, orders, cart
 from .database import init_db
 
 app = FastAPI(
@@ -9,6 +9,7 @@ app = FastAPI(
 app.include_router(products.router)
 app.include_router(auth.router)
 app.include_router(orders.router)
+app.include_router(cart.router)
 
 try:
     init_db()
